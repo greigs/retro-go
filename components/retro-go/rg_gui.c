@@ -1081,6 +1081,19 @@ void rg_gui_draw_keyboard(const rg_keyboard_map_t *map, size_t cursor)
 
 static rg_gui_event_t volume_update_cb(rg_gui_option_t *option, rg_gui_event_t event)
 {
+    // Handle initialization - just display current volume without changing anything
+    if (event == RG_DIALOG_INIT)
+    {
+        int level = 100; // Default volume
+        if (rg_audio_get_driver() != NULL)
+            level = rg_audio_get_volume();
+        else
+            level = (int)rg_settings_get_number(NS_GLOBAL, "Volume", 100);
+        
+        sprintf(option->value, "<%d>", level);
+        return RG_DIALOG_VOID;
+    }
+
     int level = rg_audio_get_volume();
     int prev_level = level;
 
@@ -1090,11 +1103,18 @@ static rg_gui_event_t volume_update_cb(rg_gui_option_t *option, rg_gui_event_t e
         level += 5;
 
     level -= (level % 5);
+    level = RG_MIN(RG_MAX(level, 0), 100);
 
     if (level != prev_level)
-        rg_audio_set_volume(level);
+    {
+        // Store the volume setting even if audio driver isn't ready
+        rg_settings_set_number(NS_GLOBAL, "Volume", level);
+        // Only call rg_audio_set_volume if audio is ready
+        if (rg_audio_get_driver() != NULL)
+            rg_audio_set_volume(level);
+    }
 
-    sprintf(option->value, "%d%%", rg_audio_get_volume());
+    sprintf(option->value, "<%d>", level);
 
     return RG_DIALOG_VOID;
 }
@@ -1817,6 +1837,7 @@ void rg_gui_game_menu(void)
     const rg_gui_option_t choices[] = {
         {1000, _("Save & Continue"), NULL, RG_DIALOG_FLAG_NORMAL, NULL},
         {2000, _("Save & Quit"),     NULL, RG_DIALOG_FLAG_NORMAL, NULL},
+        {4000, _("Volume"),          "-", RG_DIALOG_FLAG_NORMAL, &volume_update_cb},
         {3001, _("Load game"),       NULL, RG_DIALOG_FLAG_NORMAL, NULL},
         {3000, _("Reset"),           NULL, RG_DIALOG_FLAG_NORMAL, NULL},
         #ifdef RG_ENABLE_NETPLAY
@@ -1847,6 +1868,7 @@ void rg_gui_game_menu(void)
     {
         case 1000: if ((slot = rg_gui_savestate_menu(_("Save"), rom_path)) >= 0) rg_emu_save_state(slot); break;
         case 2000: if ((slot = rg_gui_savestate_menu(_("Save"), rom_path)) >= 0 && rg_emu_save_state(slot)) rg_system_exit(); break;
+        case 4000: /* Volume control handled by callback */ break;
         case 3001: if ((slot = rg_gui_savestate_menu(_("Load"), rom_path)) >= 0) rg_emu_load_state(slot); break;
         case 3002: rg_emu_reset(false); break;
         case 3003: rg_emu_reset(true); break;

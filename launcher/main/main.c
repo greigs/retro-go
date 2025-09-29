@@ -130,6 +130,26 @@ static rg_gui_event_t color_theme_cb(rg_gui_option_t *option, rg_gui_event_t eve
     return RG_DIALOG_VOID;
 }
 
+static rg_gui_event_t volume_update_cb(rg_gui_option_t *option, rg_gui_event_t event)
+{
+    int level = rg_audio_get_volume();
+    int prev_level = level;
+
+    if (event == RG_DIALOG_PREV)
+        level -= 5;
+    if (event == RG_DIALOG_NEXT)
+        level += 5;
+
+    level -= (level % 5);
+
+    if (level != prev_level)
+        rg_audio_set_volume(level);
+
+    sprintf(option->value, "<%d>", rg_audio_get_volume());
+
+    return RG_DIALOG_VOID;
+}
+
 static rg_gui_event_t startup_app_cb(rg_gui_option_t *option, rg_gui_event_t event)
 {
     const char *modes[] = {_("Last game"), _("Launcher")};
@@ -432,6 +452,7 @@ static void options_handler(rg_gui_option_t *dest)
         {0, _("Preview"),      "-", RG_DIALOG_FLAG_NORMAL, &show_preview_cb},
         {0, _("Scroll mode"),  "-", RG_DIALOG_FLAG_NORMAL, &scroll_mode_cb},
         {0, _("Start screen"), "-", RG_DIALOG_FLAG_NORMAL, &start_screen_cb},
+        {0, _("Volume"),       "-", RG_DIALOG_FLAG_NORMAL, &volume_update_cb},
         {0, _("Hide tabs"),    "-", RG_DIALOG_FLAG_NORMAL, &toggle_tabs_cb},
         #ifdef RG_ENABLE_NETWORKING
         {0, _("File server"),  "-", RG_DIALOG_FLAG_NORMAL, &webui_switch_cb},

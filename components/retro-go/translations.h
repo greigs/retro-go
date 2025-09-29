@@ -526,6 +526,10 @@ static const char *translations[][RG_LANG_MAX] =
         [RG_LANG_FR] = "Sauver et quitter",
     },
     {
+        [RG_LANG_EN] = "Volume",
+        [RG_LANG_FR] = "Volume",
+    },
+    {
         [RG_LANG_EN] = "Load game",
         [RG_LANG_FR] = "Charger partie",
     },
