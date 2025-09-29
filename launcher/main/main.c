@@ -211,6 +211,19 @@ static void retro_loop(void)
         webui_start();
 #endif
 
+    // Check if there's only one ROM and auto-start it
+    int rom_count = applications_count_roms();
+    if (rom_count == 1)
+    {
+        retro_file_t *single_rom = applications_find_single_rom();
+        if (single_rom)
+        {
+            RG_LOGI("Auto-starting single ROM: %s", single_rom->name);
+            application_start(single_rom, -1); // -1 means new game
+            return; // Exit the launcher loop
+        }
+    }
+
     if (!gui_get_current_tab())
         gui.selected_tab = 0;
     tab = gui_set_current_tab(gui.selected_tab);

@@ -49,6 +49,9 @@ typedef struct tab_s tab_t;
 
 void applications_init(void);
 void application_show_file_menu(retro_file_t *file, bool simplified);
+void application_start(retro_file_t *file, int load_state);
 bool application_get_file_crc32(retro_file_t *file);
 bool application_path_to_file(const char *path, retro_file_t *out_file);
 void crc_cache_prebuild(void);
+int applications_count_roms(void);
+retro_file_t *applications_find_single_rom(void);
