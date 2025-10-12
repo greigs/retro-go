@@ -123,7 +123,7 @@ static const char *get_file_path(retro_file_t *file)
     return buffer;
 }
 
-void application_start(retro_file_t *file, int load_state)
+static void application_start(retro_file_t *file, int load_state)
 {
     RG_ASSERT_ARG(file);
     char *part = strdup(file->app->partition);
@@ -677,44 +677,6 @@ static void application(const char *desc, const char *name, const char *exts, co
     app->crc_offset = crc_offset;
 
     gui_add_tab(app->short_name, app->description, app, event_handler);
-}
-
-int applications_count_roms(void)
-{
-    int total_roms = 0;
-    
-    for (int i = 0; i < apps_count; i++)
-    {
-        retro_app_t *app = apps[i];
-        if (!app->initialized)
-            application_init(app);
-            
-        for (size_t j = 0; j < app->files_count; j++)
-        {
-            if (app->files[j].type == RETRO_TYPE_FILE)
-                total_roms++;
-        }
-    }
-    
-    return total_roms;
-}
-
-retro_file_t *applications_find_single_rom(void)
-{
-    for (int i = 0; i < apps_count; i++)
-    {
-        retro_app_t *app = apps[i];
-        if (!app->initialized)
-            application_init(app);
-            
-        for (size_t j = 0; j < app->files_count; j++)
-        {
-            if (app->files[j].type == RETRO_TYPE_FILE)
-                return &app->files[j];
-        }
-    }
-    
-    return NULL;
 }
 
 void applications_init(void)
