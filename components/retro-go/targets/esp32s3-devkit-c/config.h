@@ -23,7 +23,7 @@
 #define RG_SCREEN_WIDTH             240
 #define RG_SCREEN_HEIGHT            320
 #define RG_SCREEN_ROTATE            0
-#define RG_SCREEN_VISIBLE_AREA      {0, 0, 0, 0}
+#define RG_SCREEN_VISIBLE_AREA      {0, 50, 0, 0}
 #define RG_SCREEN_SAFE_AREA         {0, 0, 0, 0}
 #define RG_SCREEN_INIT()                                                                                         \
     ILI9341_CMD(0xCF, 0x00, 0xc3, 0x30);                                                                         \
@@ -46,32 +46,23 @@
     ILI9341_CMD(0xE1, 0x00, 0x0E, 0x14, 0x03, 0x11, 0x07, 0x31, 0xC1, 0x48, 0x08, 0x0F, 0x0C, 0x31, 0x36, 0x0F);
 
 
-    // GPIO Number	ADC Channel
-    // GPIO1	ADC1_CH0
-    // GPIO2	ADC1_CH1
-    // GPIO3	ADC1_CH2
-    // GPIO4	ADC1_CH3
-    // GPIO5	ADC1_CH4
-    // GPIO6	ADC1_CH5
-    // GPIO7	ADC1_CH6
-    // GPIO8	ADC1_CH7
-    // GPIO9	ADC1_CH8    
-
 
 // Input
 // Refer to rg_input.h to see all available RG_KEY_* and RG_GAMEPAD_*_MAP types
+
+
 #define RG_GAMEPAD_ADC_MAP {\
-    {RG_KEY_UP,    ADC_UNIT_1, ADC_CHANNEL_5, ADC_ATTEN_DB_11, 3072, 4096},\
-    {RG_KEY_RIGHT, ADC_UNIT_1, ADC_CHANNEL_6, ADC_ATTEN_DB_11, 1024, 3071},\
+    {RG_KEY_LEFT,    ADC_UNIT_1, ADC_CHANNEL_5, ADC_ATTEN_DB_11, 3072, 4096},\
+    {RG_KEY_UP, ADC_UNIT_1, ADC_CHANNEL_6, ADC_ATTEN_DB_11, 1024, 3071},\
     {RG_KEY_DOWN,  ADC_UNIT_1, ADC_CHANNEL_5, ADC_ATTEN_DB_11, 1024, 3071},\
-    {RG_KEY_LEFT,  ADC_UNIT_1, ADC_CHANNEL_6, ADC_ATTEN_DB_11, 3072, 4096},\
+    {RG_KEY_RIGHT,  ADC_UNIT_1, ADC_CHANNEL_6, ADC_ATTEN_DB_11, 3072, 4096},\
     {RG_KEY_MENU, ADC_UNIT_1, ADC_CHANNEL_7, ADC_ATTEN_DB_11, 3000, 4096}\
 }
 #define RG_GAMEPAD_GPIO_MAP {\
     {RG_KEY_SELECT, .num = GPIO_NUM_16, .pullup = 1, .level = 0},\
     {RG_KEY_START,  .num = GPIO_NUM_17, .pullup = 1, .level = 0},\
-    {RG_KEY_A,      .num = GPIO_NUM_15, .pullup = 1, .level = 0},\
-    {RG_KEY_B,      .num = GPIO_NUM_5,  .pullup = 1, .level = 0}\
+    {RG_KEY_B,      .num = GPIO_NUM_15, .pullup = 1, .level = 0},\
+    {RG_KEY_A,      .num = GPIO_NUM_5,  .pullup = 1, .level = 0}\
 }
 
 // Battery
@@ -105,6 +96,3 @@
 #define RG_GPIO_SND_I2S_DATA        40
 // #define RG_GPIO_SND_AMP_ENABLE      18
 
-// Audio volume preset
-#define RG_AUDIO_DEFAULT_VOLUME    25
-#define RG_AUDIO_MAX_VOLUME        25
