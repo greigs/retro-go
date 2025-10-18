@@ -55,14 +55,14 @@
     {RG_KEY_LEFT,    ADC_UNIT_1, ADC_CHANNEL_5, ADC_ATTEN_DB_11, 3072, 4096},\
     {RG_KEY_UP, ADC_UNIT_1, ADC_CHANNEL_6, ADC_ATTEN_DB_11, 1024, 3071},\
     {RG_KEY_DOWN,  ADC_UNIT_1, ADC_CHANNEL_5, ADC_ATTEN_DB_11, 1024, 3071},\
-    {RG_KEY_RIGHT,  ADC_UNIT_1, ADC_CHANNEL_6, ADC_ATTEN_DB_11, 3072, 4096},\
-    {RG_KEY_MENU, ADC_UNIT_1, ADC_CHANNEL_7, ADC_ATTEN_DB_11, 3000, 4096}\
+    {RG_KEY_RIGHT,  ADC_UNIT_1, ADC_CHANNEL_6, ADC_ATTEN_DB_11, 3072, 4096}\
 }
 #define RG_GAMEPAD_GPIO_MAP {\
     {RG_KEY_SELECT, .num = GPIO_NUM_16, .pullup = 1, .level = 0},\
     {RG_KEY_START,  .num = GPIO_NUM_17, .pullup = 1, .level = 0},\
     {RG_KEY_B,      .num = GPIO_NUM_15, .pullup = 1, .level = 0},\
-    {RG_KEY_A,      .num = GPIO_NUM_5,  .pullup = 1, .level = 0}\
+    {RG_KEY_A,      .num = GPIO_NUM_5,  .pullup = 1, .level = 0},\
+    {RG_KEY_MENU,   .num = GPIO_NUM_18,  .pullup = 1, .level = 0}\
 }
 
 // Battery
