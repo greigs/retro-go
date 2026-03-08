@@ -31,7 +31,7 @@ static int max_visible_lines(const tab_t *tab, int *_line_height)
 void gui_init(bool cold_boot)
 {
     gui = (retro_gui_t){
-        .selected_tab = rg_settings_get_number(NS_APP, SETTING_SELECTED_TAB, 0),
+        .selected_tab = rg_settings_get_number(NS_APP, SETTING_SELECTED_TAB, 2),
         .startup_mode = rg_settings_get_number(NS_APP, SETTING_STARTUP_MODE, 0),
         .language     = rg_settings_get_number(NS_APP, SETTING_LANGUAGE, 0),
         .color_theme  = rg_settings_get_number(NS_APP, SETTING_COLOR_THEME, 0),

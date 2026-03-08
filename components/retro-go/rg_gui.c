@@ -1007,6 +1007,15 @@ intptr_t rg_gui_dialog(const char *title, const rg_gui_option_t *options_const, 
 
     rg_input_wait_for_key(joystick, false, 1000);
     rg_display_force_redraw();
+    if (!gui.screen_buffer)
+    {
+        /* Clear non-playable areas: status bar + dialog label (e.g. "Slot 0 (last used)") so nothing is left on screen */
+        int bar_h = TEXT_RECT("0", 0).height;
+        int dialog_label_h = 3 + gui.font_height * 2 + 6 + 2; /* border + label box height + margin (matches slot_select_cb) */
+        int clear_h = bar_h > dialog_label_h ? bar_h : dialog_label_h;
+        rg_display_clear_rect(0, 0, gui.screen_width, clear_h, C_BLACK);
+        rg_display_clear_rect(0, gui.screen_height - clear_h, gui.screen_width, clear_h, C_BLACK);
+    }
     // free(shadow_options);
     free(shadow_text_buffer);
 
