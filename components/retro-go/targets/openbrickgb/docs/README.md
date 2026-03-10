@@ -1,4 +1,4 @@
-# LEGO GB
+# OpenBrickGB
 - Status:
 - Ref: https://hackaday.io/project/204088-lego-game-boy-functional-upgrade
 
