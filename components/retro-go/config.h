@@ -32,7 +32,7 @@
 #include "targets/crokpocket/config.h"
 #elif defined(RG_TARGET_REDROID_GO)
 #include "targets/redroid-go/config.h"
-#elif defined(RG_TARGET_openbrickgb)
+#elif defined(RG_TARGET_OPENBRICKGB)
 #include "targets/openbrickgb/config.h"
 #else
 #warning "No target defined. Defaulting to ODROID-GO."
