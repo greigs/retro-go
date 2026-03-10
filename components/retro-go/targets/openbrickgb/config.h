@@ -1,5 +1,5 @@
 // Target definition
-#define RG_TARGET_NAME             "openbrickgb"
+#define RG_TARGET_NAME             "OPENBRICKGB"
 
 // Storage
 #define RG_STORAGE_ROOT             "/sd"

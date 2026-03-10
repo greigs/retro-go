@@ -1006,6 +1006,16 @@ intptr_t rg_gui_dialog(const char *title, const rg_gui_option_t *options_const, 
     }
 
     rg_input_wait_for_key(joystick, false, 1000);
+    if (!gui.screen_buffer)
+    {
+        const rg_display_t *disp = rg_display_get_info();
+        int top_margin = disp->viewport.top;
+        int bottom_margin = gui.screen_height - (disp->viewport.top + disp->viewport.height);
+        if (top_margin > 0)
+            rg_display_clear_rect(0, 0, gui.screen_width, top_margin, C_BLACK);
+        if (bottom_margin > 0)
+            rg_display_clear_rect(0, gui.screen_height - bottom_margin, gui.screen_width, bottom_margin, C_BLACK);
+    }
     rg_display_force_redraw();
     // free(shadow_options);
     free(shadow_text_buffer);

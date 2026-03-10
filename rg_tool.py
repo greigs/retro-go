@@ -64,8 +64,11 @@ MKFW_PY = os.path.join("tools", "mkfw.py")
 
 def run(cmd, cwd=None, check=True):
     print(f"Running command: {' '.join(cmd)}")
-    if os.name == 'nt' and cmd[0].endswith(".py"):
-        return subprocess.run(["python", *cmd], shell=True, cwd=cwd, check=check)
+    # Only use current interpreter for project .py scripts (e.g. tools/mkfw.py), not for PATH scripts (e.g. idf.py)
+    if cmd[0].endswith(".py") and (os.path.sep in cmd[0] or (os.path.altsep and os.path.altsep in cmd[0])):
+        cmd = [sys.executable, *cmd]
+    elif os.name == 'nt' and cmd[0].endswith(".py"):
+        cmd = [sys.executable, *cmd]
     return subprocess.run(cmd, shell=False, cwd=cwd, check=check)
 
 
