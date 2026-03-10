@@ -51,12 +51,12 @@
 // Refer to rg_input.h to see all available RG_KEY_* and RG_GAMEPAD_*_MAP types
 
 
-// D-pad: physical left→Up, right→Down, up→Right, down→Left (up/down and left/right reversed)
+// D-pad: CH5 = up/down, CH6 = left/right (corrected so physical directions match logical)
 #define RG_GAMEPAD_ADC_MAP {\
     {RG_KEY_UP,     ADC_UNIT_1, ADC_CHANNEL_5, ADC_ATTEN_DB_11, 3072, 4096},\
-    {RG_KEY_DOWN,   ADC_UNIT_1, ADC_CHANNEL_6, ADC_ATTEN_DB_11, 3072, 4096},\
-    {RG_KEY_RIGHT,  ADC_UNIT_1, ADC_CHANNEL_6, ADC_ATTEN_DB_11, 1024, 3071},\
-    {RG_KEY_LEFT,   ADC_UNIT_1, ADC_CHANNEL_5, ADC_ATTEN_DB_11, 1024, 3071}\
+    {RG_KEY_DOWN,   ADC_UNIT_1, ADC_CHANNEL_5, ADC_ATTEN_DB_11, 1024, 3071},\
+    {RG_KEY_LEFT,   ADC_UNIT_1, ADC_CHANNEL_6, ADC_ATTEN_DB_11, 1024, 3071},\
+    {RG_KEY_RIGHT,  ADC_UNIT_1, ADC_CHANNEL_6, ADC_ATTEN_DB_11, 3072, 4096}\
 }
 #define RG_GAMEPAD_GPIO_MAP {\
     {RG_KEY_SELECT, .num = GPIO_NUM_16, .pullup = 1, .level = 0},\
