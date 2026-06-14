@@ -687,6 +687,37 @@ static void application(const char *desc, const char *name, const char *exts, co
     gui_add_tab(app->short_name, app->description, app, event_handler);
 }
 
+// Romless built-in app (e.g. the aquarium): no ROM folder, selecting the tab
+// and pressing the action button launches the app partition directly.
+static void builtin_event_handler(gui_event_t event, tab_t *tab)
+{
+    const char *part = (const char *)tab->arg;
+
+    if (event == TAB_INIT || event == TAB_ENTER || event == TAB_SCROLL)
+    {
+        gui_set_status(tab, NULL, _("Press A or START to open"));
+        gui_set_preview(tab, NULL);
+    }
+    else if (event == TAB_ACTION)
+    {
+        if (part && rg_system_have_app(part))
+            rg_system_switch_app(part, tab->name, "", 0);
+        else
+            rg_gui_alert(tab->name, _("App not installed"));
+    }
+}
+
+static void application_builtin(const char *desc, const char *name, const char *part)
+{
+    if (!rg_system_have_app(part))
+    {
+        RG_LOGI("Application '%s' (%s) not present, skipping", desc, part);
+        return;
+    }
+    // arg carries the partition name; the tab has no file listbox.
+    gui_add_tab(name, desc, (void *)part, builtin_event_handler);
+}
+
 void applications_init(void)
 {
     application("Nintendo Entertainment System", "nes", "nes fc fds nsf zip", "retro-core", 16);
@@ -706,6 +737,7 @@ void applications_init(void)
     // application("Neo Geo Pocket Color", "ngp", "ngp ngc zip", "ngpocket-go", 0);
     application("DOOM", "doom", "wad zip", "prboom-go", 0);
     application("MSX", "msx", "rom mx1 mx2 dsk", "fmsx", 0);
+    application_builtin("Aquarium", "aquarium", "aquarium-go");
 
     // Special app to bootstrap native esp32 binaries from the SD card
     // application("Bootstrap", "apps", "bin elf", "bootstrap", 0);
